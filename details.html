@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Place Details</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>Uttarakhand Tourism</header>
+
+<div class="details-container">
+  <img id="placeImage" class="banner-img" src="" alt="Place Image">
+  <div class="place-info">
+    <h2 id="placeName"></h2>
+    <p><strong>Minister:</strong> <span id="minister"></span></p>
+    <p><strong>Location:</strong> <span id="location"></span></p>
+    <p><strong>Short Info:</strong> <span id="shortInfo"></span></p>
+    <p><strong>Famous For:</strong> <span id="famousFor"></span></p>
+    <p><strong>Best Time:</strong> <span id="bestTime"></span></p>
+    <p><strong>Altitude:</strong> <span id="altitude"></span></p>
+    <p><strong>Nearby:</strong> <span id="nearby"></span></p>
+    <p><strong>Details:</strong></p>
+    <p id="info"></p>
+  </div>
+  <div class="button-container">
+    <button class="btn" onclick="window.location.href='index.html'">⬅ Home</button>
+    <button class="btn btn-map" onclick="window.location.href='map.html'">📍 View Map</button>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+let selectedPlace = localStorage.getItem("selectedPlace");
+let allPlaces = {...places, ...(JSON.parse(localStorage.getItem("userPlaces")) || {})};
+
+if(selectedPlace && allPlaces[selectedPlace]){
+  let place = allPlaces[selectedPlace];
+  document.getElementById("placeName").innerText = selectedPlace;
+  document.getElementById("minister").innerText = place.minister;
+  document.getElementById("location").innerText = place.location;
+  document.getElementById("shortInfo").innerText = place.shortInfo;
+  document.getElementById("famousFor").innerText = place.famousFor;
+  document.getElementById("bestTime").innerText = place.bestTime;
+  document.getElementById("altitude").innerText = place.altitude;
+  document.getElementById("nearby").innerText = place.nearby;
+  document.getElementById("info").innerText = place.info;
+  document.getElementById("placeImage").src = place.image;
+}else{
+  document.getElementById("placeName").innerText = "Place not found!";
+}
+</script>
+</body>
+</html>

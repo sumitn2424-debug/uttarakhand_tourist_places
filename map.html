@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Place Location</title>
+  <style>
+    body, html { margin:0; padding:0; height:100%; font-family:'Poppins'; }
+    header { background:linear-gradient(135deg,#2E7D32,#4CAF50); color:white; padding:15px; text-align:center; font-size:24px; font-weight:bold; }
+    .map-container { width:100%; height:calc(100% - 60px); position:relative; }
+    iframe { width:100%; height:100%; border:0; }
+    .btn-back { position:absolute; top:70px; left:20px; background-color:#4CAF50; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; font-size:16px; z-index:10; }
+    .btn-back:hover { background-color:#388E3C; }
+  </style>
+</head>
+<body>
+<header>Place Location</header>
+<button class="btn-back" onclick="window.location.href='details.html'">⬅ Back</button>
+<div class="map-container">
+  <iframe id="mapFrame" src="" allowfullscreen="" loading="lazy"></iframe>
+</div>
+
+<script src="data.js"></script>
+<script>
+const selectedPlace = localStorage.getItem("selectedPlace");
+const allPlaces = {...places, ...(JSON.parse(localStorage.getItem("userPlaces")) || {})};
+const iframe = document.getElementById("mapFrame");
+
+if(selectedPlace && allPlaces[selectedPlace]){
+  const place = allPlaces[selectedPlace];
+  const query = encodeURIComponent(selectedPlace + ", " + place.location);
+  iframe.src = `https://www.google.com/maps?q=${query}&hl=en&z=15&output=embed`;
+} else { iframe.src = "about:blank"; }
+</script>
+</body>
+</html>

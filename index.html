@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Uttarakhand Tourism</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  Uttarakhand Tourism - Explore Now
+  <button onclick="window.location.href='verify.html'" class="btn-add-place">Add Place</button>
+</header>
+
+<div class="container" id="placesContainer"></div>
+
+<script src="data.js"></script>
+<script>
+function displayPlace(name, data) {
+  const container = document.getElementById("placesContainer");
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const img = document.createElement("img");
+  img.src = data.image;
+  img.alt = name;
+
+  const title = document.createElement("h3");
+  title.textContent = name;
+
+  const shortInfo = document.createElement("p");
+  shortInfo.textContent = data.shortInfo;
+
+  card.appendChild(img);
+  card.appendChild(title);
+  card.appendChild(shortInfo);
+
+  card.addEventListener("click", () => {
+    localStorage.setItem("selectedPlace", name);
+    window.location.href = "details.html";
+  });
+
+  // Delete button for user-added places, requires verified admin
+  let userPlaces = JSON.parse(localStorage.getItem("userPlaces")) || {};
+  if(userPlaces[name] && localStorage.getItem("verified") === "true") {
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "Delete";
+    delBtn.style.background = "#E53935";
+    delBtn.style.color = "white";
+    delBtn.style.border = "none";
+    delBtn.style.borderRadius = "6px";
+    delBtn.style.padding = "5px 10px";
+    delBtn.style.marginTop = "5px";
+    delBtn.style.cursor = "pointer";
+
+    delBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if(localStorage.getItem("verified") !== "true") {
+        alert("You are not authorized to delete this place!");
+        return;
+      }
+      if(confirm(`Are you sure you want to delete "${name}"?`)) {
+        delete userPlaces[name];
+        localStorage.setItem("userPlaces", JSON.stringify(userPlaces));
+        card.remove();
+      }
+    });
+    card.appendChild(delBtn);
+  }
+
+  container.appendChild(card);
+}
+
+// Default places
+Object.keys(places).forEach(place => displayPlace(place, places[place]));
+
+// User-added places
+const userPlaces = JSON.parse(localStorage.getItem("userPlaces")) || {};
+Object.keys(userPlaces).forEach(place => displayPlace(place, userPlaces[place]));
+</script>
+
+</body>
+</html>

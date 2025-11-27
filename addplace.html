@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add New Place</title>
+  <style>
+    body { font-family: 'Poppins', sans-serif; background:#e8f5e9; display:flex; justify-content:center; align-items:flex-start; padding-top:30px; min-height:100vh; }
+    .form-box { background:white; padding:30px 40px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.1); width:400px; }
+    input, textarea { width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ccc; font-size:16px; }
+    button { padding:12px 20px; background-color:#4CAF50; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
+    button:hover { background-color:#388E3C; }
+  </style>
+</head>
+<body>
+<div class="form-box">
+  <h2>Add New Place</h2>
+  <input type="text" id="name" placeholder="Place Name">
+  <input type="text" id="location" placeholder="Location">
+  <input type="text" id="minister" placeholder="Local Minister">
+  <input type="text" id="shortInfo" placeholder="Short Info">
+  <input type="text" id="famousFor" placeholder="Famous For">
+  <input type="text" id="bestTime" placeholder="Best Time">
+  <input type="text" id="altitude" placeholder="Altitude">
+  <input type="text" id="nearby" placeholder="Nearby Attractions">
+  <textarea id="info" placeholder="Detailed Info"></textarea>
+  <input type="text" id="image" placeholder="Image URL">
+  <button onclick="addPlace()">Add Place</button>
+</div>
+
+<script>
+if(localStorage.getItem("verified")!=="true"){ alert("Not verified!"); window.location.href="verify.html"; }
+
+function addPlace(){
+  const name = document.getElementById("name").value;
+  if(!name){ alert("Place name is required"); return; }
+  const newPlace = {
+    minister: document.getElementById("minister").value,
+    location: document.getElementById("location").value,
+    shortInfo: document.getElementById("shortInfo").value,
+    famousFor: document.getElementById("famousFor").value,
+    bestTime: document.getElementById("bestTime").value,
+    altitude: document.getElementById("altitude").value,
+    nearby: document.getElementById("nearby").value,
+    info: document.getElementById("info").value,
+    image: document.getElementById("image").value
+  };
+  let userPlaces = JSON.parse(localStorage.getItem("userPlaces")) || {};
+  userPlaces[name] = newPlace;
+  localStorage.setItem("userPlaces", JSON.stringify(userPlaces));
+  alert("Place added successfully!");
+  window.location.href="index.html";
+}
+</script>
+</body>
+</html>

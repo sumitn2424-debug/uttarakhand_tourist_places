@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verification</title>
+  <style>
+    body { font-family: 'Poppins', sans-serif; background:#e8f5e9; display:flex; justify-content:center; align-items:center; height:100vh; }
+    .login-box { background:white; padding:30px 40px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.1); text-align:center; }
+    input { width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ccc; font-size:16px; }
+    button { padding:12px 20px; background-color:#4CAF50; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
+    button:hover { background-color:#388E3C; }
+  </style>
+</head>
+<body>
+<div class="login-box">
+  <h2>Admin Verification</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="verifyUser()">Verify</button>
+</div>
+
+<script>
+function verifyUser() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  if(username==="admin" && password==="1234"){
+    localStorage.setItem("verified","true");
+    alert("Verification successful!");
+    window.location.href="addplace.html";
+  } else {
+    alert("Invalid credentials!");
+  }
+}
+</script>
+</body>
+</html>
